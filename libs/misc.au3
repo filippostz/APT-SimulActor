@@ -16,10 +16,6 @@ EndFunc
 Func Log2File($log)
     ;Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
 	Local Const $sFilePath = @TempDir & "\drop.tmp"
-
-
-
-    ; Open the file for writing (append to the end of a file) and store the handle to a variable.
     Local $hFileOpen = FileOpen($sFilePath, $FO_APPEND)
     If $hFileOpen = -1 Then
         MsgBox($MB_SYSTEMMODAL, "", "An error occurred whilst writing the temporary file.")
