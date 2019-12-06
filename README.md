@@ -1,1 +1,1 @@
-# EDR-Tester
+# EDR Tester
