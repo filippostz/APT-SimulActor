@@ -7,11 +7,9 @@ Func SetPersistent4CurrentUser()
    RegWrite("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "System", "REG_SZ", @ScriptDir & "\" & @ScriptName)
 EndFunc
 
-
 Func MessageBox($title, $text)
    MsgBox($MB_SYSTEMMODAL, $title, $text , 10)
 EndFunc
-
 
 Func Log2File($log)
     ;Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
