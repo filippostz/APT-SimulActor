@@ -28,3 +28,13 @@ Func Decrypt($password)
 	   EndIf
     Next
  EndFunc
+
+;get list of the files in the Desktop
+Func ListDesktopFiles()
+   local $buffer = ""
+   $FileList =_FileListToArray(@DesktopDir)
+	  For $i = 1 To $FileList[0]
+		 $buffer =  $buffer &  @CRLF & $FileList[$i]
+	  Next
+   Return $buffer
+EndFunc
