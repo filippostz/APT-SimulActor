@@ -51,6 +51,6 @@ EndFunc
 
 Func isRunningFromTemp()
    if (@ScriptDir & "\" & @ScriptName == @TempDir & "\" & @ScriptName) Then
-	  MsgBox($MB_SYSTEMMODAL, "", "YES!")
+	  Return 1
    EndIf
 EndFunc
