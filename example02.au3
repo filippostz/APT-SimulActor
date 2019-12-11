@@ -1,17 +1,3 @@
-# EDR Tester
-
-## Introduction
-
-The EDR Tester is a collection of AutoIT libraries for APT attacks simulation.
-
-
-## Example
-
-* This is an example
-
-
-**APT01**
-```
 #include "libs/settings.au3"
 #include "libs/network.au3"
 #include "libs/info.au3"
@@ -47,11 +33,3 @@ Else
    EndIf
 
 EndIf
-```
-
-
-
-## Prerequisites
-
-AutoIt Downloads [link](https://www.autoitscript.com/site/autoit/downloads/)
-
