@@ -2,7 +2,8 @@
 
 ## Introduction
 
-The EDR Tester is a collection of AutoIT libraries for APT attacks simulation.
+Targeted attacks are not random in nature and are usually composed of different phases like infection, data exfiltration and persistency.
+APT SimulActor is a little framework based on AutoIT libraries for basic EDR POCs.
 
 
 ## Example
