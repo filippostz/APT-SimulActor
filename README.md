@@ -1,4 +1,4 @@
-# EDR Tester
+# APT SimulActor
 
 ## Introduction
 
