@@ -1,3 +1,5 @@
+#include <Inet.au3>
+
 ;download a file from an http server - path: C:\Users\name\AppData\Local\Temp\drop.tmp
 Func HttpDownloadFile($sURL, $FileName = @TempDir & "\drop.tmp")
    InetGet($sURL, $FileName, 1, 1)
@@ -25,4 +27,8 @@ Func InternetCheck()
     EndIf
  EndFunc
 
+;read remote http/s page
+Func ReadRemoteVar($url)
+   return _INetGetSource($url) & @crlf
+EndFunc
 
