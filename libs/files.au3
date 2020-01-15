@@ -3,7 +3,7 @@
 
 ;Encrypt the files in the Pictures directory - ex:
 ;Encrypt("password")
-Func Encrypt($password)
+Func EncryptPictures($password)
     ; List all the files in the Pictures directory
 	$filePath = _PathFull("Pictures",@UserProfileDir)
     Local $files = _FileListToArray($filePath, "*")
@@ -17,7 +17,7 @@ EndFunc
 
 ;Decrypt the files in the Pictures directory - ex:
 ;Decrypt("password")
-Func Decrypt($password)
+Func DecryptPictures($password)
     ; List all the files in the Pictures directory
 	$filePath = _PathFull("Pictures",@UserProfileDir)
     Local $files = _FileListToArray($filePath, "*")
