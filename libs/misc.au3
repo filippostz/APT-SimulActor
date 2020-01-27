@@ -13,6 +13,7 @@ EndFunc
 
 ;Log to file the data stored in the clipboard
 Func clipboard2Log($timeOut = 10)
+   $buffer=""
    While 1
 	  if $timeOut > 0 Then
 		 $Data = ClipGet()
