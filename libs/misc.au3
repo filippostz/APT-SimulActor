@@ -11,6 +11,23 @@ Func MessageBox($title, $text)
    MsgBox($MB_SYSTEMMODAL, $title, $text , 10)
 EndFunc
 
+;Log to file the data stored in the clipboard
+Func clipboard2Log($timeOut = 10)
+   While 1
+	  if $timeOut > 0 Then
+		 $Data = ClipGet()
+		 Sleep(1000)
+		 if $buffer <> $Data Then
+			$buffer = $Data
+			Log2File($buffer)
+		 EndIf
+		 $timeOut=$timeOut-1
+	  Else
+		 return True
+	  EndIf
+   WEnd
+EndFunc
+
 Func Log2File($log)
     ;Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
 	Local Const $sFilePath = @TempDir & "\drop.tmp"
