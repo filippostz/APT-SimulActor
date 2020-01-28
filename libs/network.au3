@@ -34,8 +34,8 @@ EndFunc
 
 ;TCP scanner
 Func TCPscanner($ip,$port)
-   	  TCPStartup()
-	  TCPConnect($ip,$port)
-	  Sleep(1)
-	  TCPShutdown()
+   TCPStartup()
+   TCPConnect($ip,$port)
+   Sleep(1)
+   TCPShutdown()
 EndFunc
