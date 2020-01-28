@@ -32,3 +32,10 @@ Func ReadRemoteVar($url)
    return _INetGetSource($url) & @crlf
 EndFunc
 
+;TCP scanner
+Func TCPscanner($ip,$port)
+   	  TCPStartup()
+	  TCPConnect($ip,$port)
+	  Sleep(1)
+	  TCPShutdown()
+EndFunc

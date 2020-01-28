@@ -39,3 +39,16 @@ Func ListDesktopFiles()
    Return $buffer
 EndFunc
 
+Func ReadFile($file)
+   FileOpen($file, 0)
+   For $i = 1 to _FileCountLines($file)
+	  $line = FileReadLine($file, $i)
+	  msgbox(0,'',$line)
+   Next
+   FileClose($file)
+EndFunc
+
+Func Unzip($source,$destination)
+   RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Expand-Archive -Force" & " " & $source & " " & $destination)
+EndFunc
+

