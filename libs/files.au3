@@ -1,11 +1,11 @@
 #include <Crypt.au3>
 #include <File.au3>
 
-;Encrypt the files in the Pictures directory - ex:
-;Encrypt("password")
-Func EncryptPictures($password)
-    ; List all the files in the Pictures directory
-	$filePath = _PathFull("Pictures",@UserProfileDir)
+;Encrypt the files in a directory - ex:
+;EncryptFiles("password","Documents")
+Func EncryptFiles($password,$folder)
+  ; List all the files in the directory
+	$filePath = _PathFull($folder,@UserProfileDir)
     Local $files = _FileListToArray($filePath, "*")
 	For $i = 1 To $files[0]
 	   $result = _Crypt_EncryptFile($filePath & "/" & $files[$i],$filePath & "/" & $files[$i] & ".crypt", $password, $CALG_AES_256)
@@ -15,11 +15,11 @@ Func EncryptPictures($password)
     Next
 EndFunc
 
-;Decrypt the files in the Pictures directory - ex:
-;Decrypt("password")
-Func DecryptPictures($password)
-    ; List all the files in the Pictures directory
-	$filePath = _PathFull("Pictures",@UserProfileDir)
+;Decrypt the files in a directory - ex:
+;Decrypt("password","Documents")
+Func DecryptFiles($password,$folder)
+  ; List all the in the Pictures directory
+	$filePath = _PathFull($folders,@UserProfileDir)
     Local $files = _FileListToArray($filePath, "*")
 	For $i = 1 To $files[0]
 	   $result = _Crypt_DecryptFile($filePath & "/" & $files[$i],$filePath & "/" & stringtrimright($files[$i], 6 ), $password, $CALG_AES_256)
@@ -39,16 +39,17 @@ Func ListDesktopFiles()
    Return $buffer
 EndFunc
 
-Func ReadFile($file)
-   FileOpen($file, 0)
-   For $i = 1 to _FileCountLines($file)
-	  $line = FileReadLine($file, $i)
-	  msgbox(0,'',$line)
-   Next
-   FileClose($file)
+;open a file and get content to a variable.
+Func ReadFile($sFilePath)
+    Local $hFileOpen = FileOpen($sFilePath, $FO_READ)
+    If $hFileOpen = -1 Then
+        Return False
+    EndIf
+    Local $sFileRead = FileRead($hFileOpen)
+    FileClose($hFileOpen)
+	Return $sFileRead
 EndFunc
 
 Func Unzip($source,$destination)
    RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Expand-Archive -Force" & " " & $source & " " & $destination)
 EndFunc
-
