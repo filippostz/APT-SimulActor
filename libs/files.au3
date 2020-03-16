@@ -18,8 +18,8 @@ EndFunc
 ;Decrypt the files in a directory - ex:
 ;Decrypt("password","Documents")
 Func DecryptFiles($password,$folder)
-  ; List all the in the Pictures directory
-	$filePath = _PathFull($folders,@UserProfileDir)
+  ; List all the files in the directory
+	$filePath = _PathFull($folder,@UserProfileDir)
     Local $files = _FileListToArray($filePath, "*")
 	For $i = 1 To $files[0]
 	   $result = _Crypt_DecryptFile($filePath & "/" & $files[$i],$filePath & "/" & stringtrimright($files[$i], 6 ), $password, $CALG_AES_256)
