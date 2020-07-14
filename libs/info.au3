@@ -35,7 +35,11 @@ Func AmIusername($username)
    Else
 	  Return 0
    EndIf
+EndFunc
 
+;get number of logins for specific user
+Func numberOfLogins($user)
+   return StringReplace(StringSplit(function_wrapper("wmic netlogin where (name like '%" & $user & "') get numberoflogons"), @CRLF)[4], " ", "")
 EndFunc
 
 Func function_wrapper($command)
