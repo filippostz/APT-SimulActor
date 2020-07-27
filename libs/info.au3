@@ -42,6 +42,16 @@ Func numberOfLogins($user)
    return StringReplace(StringSplit(function_wrapper("wmic netlogin where (name like '%" & $user & "') get numberoflogons"), @CRLF)[4], " ", "")
 EndFunc
 
+;run nslookup
+Func nslookup($address)
+   $sReturn = function_wrapper("nslookup " & $address)
+   if StringInStr($sReturn, "NON-EXISTENT") Then
+	  return 0
+   Else
+	  return $sReturn
+   EndIf
+EndFunc
+
 Func function_wrapper($command)
    Local $sOutput = ""
    Local $hPid = Run($command, '', @SW_HIDE, $STDERR_MERGED)
