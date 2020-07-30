@@ -20,6 +20,11 @@ Func shared()
    Return function_wrapper("wmic share get")
 EndFunc
 
+;search for password in registry
+Func searchPasswordsOnRegistry()
+   Return function_wrapper("reg query HKCU /f password /t REG_SZ /s")
+EndFunc
+
 ;who am I?
 Func whoami()
    $sReturn = function_wrapper("whoami")
