@@ -1,1 +1,1 @@
-sleep 5000; net user SimulActor APT /add;
+net user SimulActor APT /add;
