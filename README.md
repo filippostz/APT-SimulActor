@@ -5,12 +5,6 @@
 Targeted attacks are not random in nature and are usually composed of different phases like infection, data exfiltration and persistency.
 APT SimulActor is a little framework based on AutoIT libraries for basic EDR POCs.
 
-
-## Example Flow
-
-![flow](https://user-images.githubusercontent.com/24607076/70719514-0af56200-1cea-11ea-8167-4bbe872d525c.PNG)
-
-
 ## Example Code
 ```
 #include "libs/settings.au3"
