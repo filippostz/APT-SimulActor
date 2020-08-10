@@ -16,12 +16,12 @@ def getFunctions(filename = APT_SimulActor_path):
         for line in filehandle:
             if "Func " in line:
                 try:
-                    print("-"*100)
+                    #print("-"*100)
                     text = line.split("Func ")[1]
                     function = text.split(";DESCRIPTION:")[0]
                     description = text.split(";DESCRIPTION:")[1]
                     print(function)
-                    print(description)
+                    #print(description)
                 except:
                     pass
 
@@ -39,23 +39,36 @@ class console(Cmd):
     prompt = 'ATPsimulActor>'
     intro = DISCLAIMER + "\n\nType ? to list commands\n"
 
-    def do_functions(self, inp):
+    def do_functions(self, arg):
         getFunctions()
 
-    def do_template(self, inp):
-        with open('sample.au3', 'w') as fp:
-            fp.write("#include '" + APT_SimulActor_path + "'\n")
-            fp.write("init()" + "\n")
+    def do_project(self, arg):
+        args = arg.split()
+        projects = os.listdir()
+        if len(args) < 2:
+            print("Invalid number of arguments")
+            return
+        else:
+            project_name = args[0]
+            action_type = args[1]
+            if action_type == 'new':
+                with open(project_name + '.au3', 'w') as fp:
+                    fp.write("#include '" + APT_SimulActor_path + "'\n")
+                    fp.write("init()" + "\n")
+                    return None
+            if project_name + ".au3" in projects:
+                if action_type == 'add':
+                    module = args[2]
+                    with open(project_name + '.au3', 'a') as fp:
+                        fp.write(module + "\n")
+                if action_type == 'compile':
+                    os.system(Aut2exe + " /in " + project_name + '.au3')
 
-    def do_compile(self, inp):
-        #https://www.autoitscript.com/autoit3/docs/intro/compiler.htm
-        #Aut2exe.exe / In < infile.au3 >[/out < outfile.exe >][/icon < iconfile.ico >][/comp 0 - 4][/nopack][/x64][/bin < binfile.bin >]
-        os.system(Aut2exe + " /in " + "sample.au3 ")
-
-    def do_update(self, inp):
+    def do_update(self, arg):
         update()
 
-    def do_exit(self, inp):
+    def do_exit(self, arg):
         return True
 
-console().cmdloop()
+if __name__ == '__main__':
+    console().cmdloop()
