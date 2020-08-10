@@ -1,3 +1,5 @@
+;DISCLAIMER: The APT-SimulActor use requires authorization from proper stakeholders. Author and Contributors will not be responsible for the malfunctioning or weaponization of the tool.
+
 #NoTrayIcon
 
 #include <Inet.au3>

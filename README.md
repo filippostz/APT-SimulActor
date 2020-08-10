@@ -7,10 +7,7 @@ APT SimulActor is a little framework based on AutoIT libraries for basic EDR POC
 
 ## Example Code
 ```
-#include "libs/settings.au3"
-#include "libs/network.au3"
-#include "libs/info.au3"
-#include "libs/misc.au3"
+#include "APT-SimulActor.au3"
 
 $victim = "john"
 $c2_ip = "192.168.231.106"
@@ -47,3 +44,7 @@ EndIf
 ## Prerequisites
 
 AutoIt Downloads [link](https://www.autoitscript.com/site/autoit/downloads/)
+
+## Disclaimer
+
+The APT-SimulActor use requires authorization from proper stakeholders. Author and Contributors will not be responsible for the malfunctioning or weaponization of the tool.
