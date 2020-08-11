@@ -9,7 +9,6 @@ APT SimulActor is a little framework based on AutoIT libraries for basic EDR POC
 ```
 #include "APT-SimulActor.au3"
 
-$victim = "john"
 $c2_ip = "192.168.231.106"
 $c2_port = "444"
 $timer = 60
