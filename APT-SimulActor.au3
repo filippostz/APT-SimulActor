@@ -252,7 +252,7 @@ Func HttpPost($ip, $tag, $sData = "");DESCRIPTION:Send data over Http;MITRE:Comm
 	  $oHTTP.Open("POST", "http://" & $ip, False)
 	  If (@error) Then Return 0
 	  $oHTTP.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-	  $oHTTP.Send("#" & $tag & ": " & $sData)
+	  $oHTTP.Send($tag & "=" & $sData)
 	  If (@error) Then Return 0
 	  If ($oHTTP.Status <> 200) Then Return SetError(3, 0, 0)
 	  Return SetError(0, 0, $oHTTP.ResponseText)
