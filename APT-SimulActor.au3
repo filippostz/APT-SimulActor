@@ -277,8 +277,10 @@ Func HttpPost($ip, $tag, $port = "80", $sData = "");DESCRIPTION:Send data over H
    $oHTTP.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded")
    $oHTTP.Send($tag & "=" & $sData)
    If @error Then
-		 Return "error"
+	  Return "error"
 	  Exit
+   Else
+	  Return($oHTTP.ResponseText)
    EndIf
 EndFunc
 
