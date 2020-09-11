@@ -154,7 +154,7 @@ Func CopyTempRun($newName = RandomString());DESCRIPTION:copy myself into temp ch
 EndFunc
 
 Func isRunningFromTemp();DESCRIPTION:Check if sample is running from Temp folder;MITRE:Discovery
-   if (@ScriptDir & "\" & @ScriptName == @TempDir & "\" & @ScriptName) Then
+   if (StringUpper(@ScriptDir) & "\" & @ScriptName == StringUpper(@TempDir) & "\" & @ScriptName) Then
 	  Return 1
    EndIf
 EndFunc
