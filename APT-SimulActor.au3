@@ -231,6 +231,10 @@ Func HttpDownloadFile($sURL, $FileName = @TempDir & "\drop.tmp");DESCRIPTION:dow
    InetGet($sURL, $FileName, 1, 1)
 EndFunc
 
+Func CertUtilDownloader($url, $fname) ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
+   RunWait("certutil.exe -urlcache -f " & $url & " C:\WINDOWS\TEMP\" & $fname,"" ,@SW_HIDE)
+EndFunc
+
 Func PopUp();DESCRIPTION:PopUp using powershell;MITRE:-
    $buffer = "[Reflection.Assembly]::LoadWithPartialName('''System.Windows.Forms''');[Windows.Forms.MessageBox]::show('''Hello World''', '''My PopUp Message Box''')"
    RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -windowstyle hidden -nop -exec bypass -c " & " " & $buffer);
@@ -329,8 +333,4 @@ EndFunc
 
 Func Unzip($source,$destination);DESCRIPTION:unzip;MITRE:-
    RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Expand-Archive -Force" & " " & $source & " " & $destination, "", @SW_HIDE)
-EndFunc
-
-Func CertUtilDownloader($url, $fname) ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
-   RunWait("certutil.exe -urlcache -f " & $url & " C:\WINDOWS\TEMP\" & $fname,"" ,@SW_HIDE)
 EndFunc
