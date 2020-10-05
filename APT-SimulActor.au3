@@ -69,8 +69,7 @@ Func RunElevatedNoUAC($buffer = 'cd..;cd..;dir;Read-Host -Prompt "Press";');DESC
    RunWait($buffer00);
 EndFunc
 
-;DESCRIPTION:Returns stream of data from Shared Resources;MITRE:Collection
-Func SharedDiscover()
+Func SharedDiscover();DESCRIPTION:Returns stream of data from Shared Resources;MITRE:Collection
    Local $limiter = "----------"
    Local $buffer
    Local $aArray = DriveGetDrive($DT_NETWORK)
