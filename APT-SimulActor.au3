@@ -355,3 +355,11 @@ EndFunc
 Func Unzip($source,$destination);DESCRIPTION:unzip;MITRE:-
    RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Expand-Archive -Force" & " " & $source & " " & $destination, "", @SW_HIDE)
 EndFunc
+
+Func DownloadPSTools()
+   If Not FileExists(@TempDir & "\PSTools.zip") Then
+	  $PSTools_path = "https://download.sysinternals.com/files/PSTools.zip"
+	  HttpDownloadFile($PSTools_path, @TempDir & "\PSTools.zip")
+	  Unzip(@TempDir & "\PSTools.zip",@TempDir & "\")
+   EndIf
+EndFunc
