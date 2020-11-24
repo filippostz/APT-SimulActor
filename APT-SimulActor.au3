@@ -11,6 +11,7 @@
 #include <Crypt.au3>
 
 Global $PSTools_URL = "https://download.sysinternals.com/files/PSTools.zip"
+Global $7Zip_URL = "https://www.7-zip.org/a/7za920.zip"
 
 $ErrorHandler = ObjEvent("AutoIt.Error", "ErrFunc") ; Custom error handler
 
