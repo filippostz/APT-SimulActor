@@ -52,8 +52,8 @@ Func DeleteScheduled($sample);DESCRIPTION:Remove the sample scheduled as a task;
    return function_wrapper("schtasks /delete /TN" & " " & $sample)
 EndFunc
 
-Func MessageBox($title, $text);DESCRIPTION:
-   MsgBox($MB_SYSTEMMODAL, $title, $text , 10)
+Func MessageBox($text);DESCRIPTION:
+   MsgBox($MB_SYSTEMMODAL,StringSplit(@ScriptName, ".")[1], $text)
 EndFunc
 
 Func RunElevated($buffer = 'cd..;cd..;dir;Read-Host -Prompt "Press";');DESCRIPTION:Run powershell command with elevated permissions UAC;MITRE:Execution
