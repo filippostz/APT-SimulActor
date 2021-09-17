@@ -231,11 +231,23 @@ Func shared();DESCRIPTION:get a list of shared resources;MITRE:Discovery
 EndFunc
 
 Func searchStringOnRegistry($string);DESCRIPTION:search for string in registry;MITRE:Credential Access
-   $result = function_wrapper("reg query HKCU /f " & $string & " /t REG_SZ /s")
-   If StringLen($result) > 40 Then
-	  Return $result
-   Else
-	  Return 0
+   $bufferPath = @TempDir & "\buffer.tmp"
+   $bufferContent = ""
+   $result = function_wrapper("reg query HKCU /f """ & $string & """ /t REG_SZ /s")
+If (StringLen($result)) > 40 Then
+	  Return($result)
+   ElseIf Not IsNumber($result) Then
+     FileDelete($bufferPath)
+	 function_wrapper("reg export hkcu " & $bufferPath)
+	 $bufferContent = ReadFile($bufferPath)
+     StringReplace($bufferContent,$string,"",1,2)
+	  if @extended then
+	    FileDelete($bufferPath)
+        Return 1
+	 Else
+		FileDelete($bufferPath)
+		Return 0
+      EndIf
    EndIf
 EndFunc
 
