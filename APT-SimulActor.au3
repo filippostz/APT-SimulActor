@@ -35,6 +35,13 @@ Func init();DESCRIPTION:init;MITRE:-
 			FileDelete($arg)
 		 EndIf
 	  EndIf
+	  if ($action == "keep_previous") Then
+		 if FileExists($arg) Then
+			_PathSplit($arg, $szDrive, $szDir, $szFName, $szExt)
+			ProcessClose($szFName & $szExt )
+			Sleep(2000)
+		 EndIf
+	  EndIf
    EndIf
 EndFunc
 
