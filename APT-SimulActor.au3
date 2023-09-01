@@ -361,7 +361,7 @@ EndFunc
 Func TCPscanner($ip,$port);DESCRIPTION:TCP scanner;MITRE:Discovery
    TCPStartup()
    $result = TCPConnect($ip,$port)
-   Sleep(1)
+   ;Sleep(1)
    TCPShutdown()
    if $result > 0 Then
 	  Return "open"
