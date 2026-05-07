@@ -141,13 +141,3 @@ EndIf
 |---|---|---|---|
 | `ClipboardToLog($iTimeout, $sLogPath)` | Poll the clipboard and append each new value to a local file | Collection | T1115 |
 | `ClipboardToWeb($sHost, $sTag, $sPort, $iTimeout)` | Poll the clipboard and POST each new value to a remote listener | Collection, Exfiltration | T1115, T1041 |
-
----
-
-## Examples
-
-| File | Summary |
-|---|---|
-| `relocate_persist_download.au3` | Baseline scenario: sandbox checks → relocate to TEMP → set run-key persistence → download PSTools via certutil |
-| `recon_and_exfil.au3` | Full recon pass: host and domain enumeration, subnet scan, file hunting, HTTP POST exfiltration |
-| `persistence_and_evasion.au3` | Layered persistence: relocate → run key + Startup folder + scheduled task → BITS download |
