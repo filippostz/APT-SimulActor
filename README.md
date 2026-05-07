@@ -37,15 +37,6 @@ If IsInternetReachable() Then
 EndIf
 ```
 
-### Global variables
-
-| Variable | Default value | Purpose |
-|---|---|---|
-| `$g_sPsToolsUrl` | `https://download.sysinternals.com/files/PSTools.zip` | PSTools archive download URL |
-| `$g_s7ZipUrl` | `https://www.7-zip.org/a/7za920.zip` | 7-Zip portable download URL |
-
----
-
 ## Function reference
 
 ### Core.au3 — generic helpers
