@@ -16,36 +16,6 @@ Functions are grouped by **technical primitive** — the Windows subsystem or me
 
 ---
 
-## Structure
-
-```
-APT-SimulActor/
-├── APT-SimulActor.au3          # Entry point — includes all modules
-├── modules/
-│   ├── Core.au3                # Error handling, generic helpers
-│   ├── Registry.au3            # Registry read/write
-│   ├── FileSystem.au3          # File and directory operations
-│   ├── Process.au3             # Process spawning, scheduling, relocation protocol
-│   ├── Network.au3             # Network I/O — scanning, download, C2
-│   ├── System.au3              # OS enumeration, sandbox and VM detection
-│   └── Clipboard.au3           # Clipboard monitoring and exfiltration
-├── tests/
-│   └── smoke.au3               # Smoke test suite (pure and read-only functions)
-├── examples/
-│   ├── relocate_persist_download.au3
-│   ├── recon_and_exfil.au3
-│   └── persistence_and_evasion.au3
-└── c2/
-    ├── server.py               # Flask C2 server
-    ├── templates/
-    │   └── dashboard.html      # Web dashboard
-    ├── requirements.txt
-    ├── payloads/               # Payload files served via DownloadFile()
-    └── exfil/                  # Received exfil data, organized by agent IP and tag
-```
-
----
-
 ## Usage
 
 Include the entry point at the top of any scenario script. All modules and global variables are loaded automatically.
