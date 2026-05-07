@@ -1,7 +1,8 @@
 # APT-SimulActor
 
 > [!CAUTION]
-> **Use of APT-SimulActor requires prior authorization from the relevant stakeholders. The authors and contributors accept no responsibility for misuse or any damage resulting from unauthorized use.**
+> **Use of APT-SimulActor requires prior authorization from the relevant stakeholders.
+> The authors and contributors accept no responsibility for misuse or any damage resulting from unauthorized use.**
 
 APT-SimulActor is an AutoIt library for red team operators and EDR validation engineers. It provides a collection of reusable, [MITRE ATT&CK](https://attack.mitre.org/)–mapped primitives for simulating adversary behaviour on Windows systems, designed to validate detection coverage and test defensive controls in authorised environments.
 
